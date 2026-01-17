@@ -1,1 +1,202 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aztec Sun Symbol</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      width: fit-content;
+      height: fit-content;
+      background: transparent;
+    }
+    
+    .aztec-btn {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        0 8px 0 rgba(0,0,0,0.3),
+        0 12px 20px rgba(0,0,0,0.4),
+        inset 0 2px 0 rgba(255,255,255,0.2),
+        inset 0 -2px 0 rgba(0,0,0,0.3);
+      transform: translateY(0);
+      width: 200px;
+      height: 200px;
+    }
+    
+    .aztec-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .aztec-btn:hover::before {
+      opacity: 1;
+    }
+    
+    .aztec-btn:hover {
+      transform: translateY(-2px) scale(1.05) rotate(2deg);
+      box-shadow: 
+        0 10px 0 rgba(0,0,0,0.3),
+        0 16px 25px rgba(0,0,0,0.5),
+        inset 0 2px 0 rgba(255,255,255,0.3),
+        inset 0 -2px 0 rgba(0,0,0,0.3);
+    }
+    
+    .aztec-btn:active {
+      transform: translateY(6px) scale(0.98);
+      box-shadow: 
+        0 2px 0 rgba(0,0,0,0.3),
+        0 4px 10px rgba(0,0,0,0.4),
+        inset 0 2px 0 rgba(255,255,255,0.2),
+        inset 0 -2px 0 rgba(0,0,0,0.3);
+    }
+    
+    .aztec-btn.clicked {
+      animation: pulse-glow 0.6s ease-out;
+    }
+    
+    @keyframes pulse-glow {
+      0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+      70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+    }
+    
+    .symbol-svg {
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+      transition: transform 0.3s;
+    }
+    
+    .aztec-btn:hover .symbol-svg {
+      transform: scale(1.1);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <main id="app-container" style="background: transparent; width: fit-content; height: fit-content; padding: 10px;"><button id="sun-btn" class="aztec-btn rounded-lg flex items-center justify-center border-2 mb-2" title="Sun" style="background: linear-gradient(145deg, #8b4513, #5d2e0a); border-color: #cd7f32; color: #d4af37;">
+    <svg viewbox="0 0 100 100" class="symbol-svg" style="width: 160px; height: 160px;"><circle cx="50" cy="50" r="20" fill="currentColor" /> <g stroke="currentColor" stroke-width="4" fill="none">
+      <line x1="50" y1="50" x2="50" y2="15" stroke-linecap="round" />
+      <line x1="50" y1="50" x2="74.75" y2="24.75" stroke-linecap="round" />
+      <line x1="50" y1="50" x2="85" y2="50" stroke-linecap="round" />
+      <line x1="50" y1="50" x2="74.75" y2="75.25" stroke-linecap="round" />
+      <line x1="50" y1="50" x2="50" y2="85" stroke-linecap="round" />
+      <line x1="50" y1="50" x2="25.25" y2="75.25" stroke-linecap="round" />
+      <line x1="50" y1="50" x2="15" y2="50" stroke-linecap="round" />
+      <line x1="50" y1="50" x2="25.25" y2="24.75" stroke-linecap="round" />
+     </g>
+    </svg></button>
+   <p id="status-text" class="text-lg text-center" style="color: #d4af37; font-family: 'Cinzel', serif;">Sun</p>
+  </main>
+  <script>
+    const defaultConfig = {
+      symbol_name: "Sun",
+      button_color: "#8b4513",
+      symbol_color: "#d4af37",
+      accent_color: "#cd7f32",
+      font_family: "Cinzel",
+      font_size: 18
+    };
 
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const frequency = 523; // C5 note for Sun
+    
+    function playClickSound() {
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+      
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.3);
+    }
+    
+    const btn = document.getElementById('sun-btn');
+    btn.addEventListener('click', () => {
+      playClickSound();
+      btn.classList.add('clicked');
+      document.getElementById('status-text').textContent = 'Sun activated!';
+      setTimeout(() => {
+        btn.classList.remove('clicked');
+        document.getElementById('status-text').textContent = 'Sun';
+      }, 600);
+    });
+
+    async function onConfigChange(config) {
+      const statusText = document.getElementById('status-text');
+      statusText.textContent = config.symbol_name || defaultConfig.symbol_name;
+      statusText.style.color = config.symbol_color || defaultConfig.symbol_color;
+      statusText.style.fontFamily = `'${config.font_family || defaultConfig.font_family}', serif`;
+      statusText.style.fontSize = `${config.font_size || defaultConfig.font_size}px`;
+      
+      btn.style.background = `linear-gradient(145deg, ${config.button_color || defaultConfig.button_color}, #5d2e0a)`;
+      btn.style.borderColor = config.accent_color || defaultConfig.accent_color;
+      btn.style.color = config.symbol_color || defaultConfig.symbol_color;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.button_color || defaultConfig.button_color,
+            set: (value) => { config.button_color = value; window.elementSdk.setConfig({ button_color: value }); }
+          },
+          {
+            get: () => config.symbol_color || defaultConfig.symbol_color,
+            set: (value) => { config.symbol_color = value; window.elementSdk.setConfig({ symbol_color: value }); }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => { config.accent_color = value; window.elementSdk.setConfig({ accent_color: value }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => { config.font_family = value; window.elementSdk.setConfig({ font_family: value }); }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => { config.font_size = value; window.elementSdk.setConfig({ font_size: value }); }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["symbol_name", config.symbol_name || defaultConfig.symbol_name]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bdfd343f2440b4e',t:'MTc2ODQyMTkzNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
