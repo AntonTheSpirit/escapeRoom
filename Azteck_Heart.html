@@ -3,7 +3,7 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aztec Sun Symbol</title>
+  <title>Aztec Heart Symbol</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&amp;display=swap" rel="stylesheet">
@@ -84,27 +84,14 @@
       transform: scale(1.1);
     }
   </style>
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body>
-  <main id="app-container" style="background: transparent; width: fit-content; height: fit-content; padding: 10px;"><button id="sun-btn" class="aztec-btn rounded-lg flex items-center justify-center border-2 mb-2" title="Sun" style="background: linear-gradient(145deg, #8b4513, #5d2e0a); border-color: #cd7f32; color: #d4af37;">
-    <svg viewbox="0 0 100 100" class="symbol-svg" style="width: 160px; height: 160px;"><circle cx="50" cy="50" r="20" fill="currentColor" /> <g stroke="currentColor" stroke-width="4" fill="none">
-      <line x1="50" y1="50" x2="50" y2="15" stroke-linecap="round" />
-      <line x1="50" y1="50" x2="74.75" y2="24.75" stroke-linecap="round" />
-      <line x1="50" y1="50" x2="85" y2="50" stroke-linecap="round" />
-      <line x1="50" y1="50" x2="74.75" y2="75.25" stroke-linecap="round" />
-      <line x1="50" y1="50" x2="50" y2="85" stroke-linecap="round" />
-      <line x1="50" y1="50" x2="25.25" y2="75.25" stroke-linecap="round" />
-      <line x1="50" y1="50" x2="15" y2="50" stroke-linecap="round" />
-      <line x1="50" y1="50" x2="25.25" y2="24.75" stroke-linecap="round" />
-     </g>
+  <main id="app-container" style="background: transparent; width: fit-content; height: fit-content; padding: 10px;"><button id="heart-btn" class="aztec-btn rounded-lg flex items-center justify-center border-2 mb-2" title="Heart" style="background: linear-gradient(145deg, #8b4513, #5d2e0a); border-color: #cd7f32; color: #d4af37;">
+    <svg viewbox="0 0 100 100" class="symbol-svg" style="width: 160px; height: 160px;"><path d="M50 80 L25 50 Q15 35 30 25 Q45 20 50 35 Q55 20 70 25 Q85 35 75 50 Z" fill="currentColor" /> <path d="M50 45 L50 65 M40 55 L60 55" stroke="#1a0f0a" stroke-width="3" />
     </svg></button>
-   <p id="status-text" class="text-lg text-center" style="color: #d4af37; font-family: 'Cinzel', serif;">Sun</p>
+   <p id="status-text" class="text-lg text-center" style="color: #d4af37; font-family: 'Cinzel', serif;">Heart</p>
   </main>
   <script>
     const defaultConfig = {
-      symbol_name: "Sun",
+      symbol_name: "Heart",
       button_color: "#8b4513",
       symbol_color: "#d4af37",
       accent_color: "#cd7f32",
@@ -113,7 +100,7 @@
     };
 
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const frequency = 523; // C5 note for Sun
+    const frequency = 1568; // G6 note for Heart
     
     function playClickSound() {
       const oscillator = audioContext.createOscillator();
@@ -132,14 +119,14 @@
       oscillator.stop(audioContext.currentTime + 0.3);
     }
     
-    const btn = document.getElementById('sun-btn');
+    const btn = document.getElementById('heart-btn');
     btn.addEventListener('click', () => {
       playClickSound();
       btn.classList.add('clicked');
-      document.getElementById('status-text').textContent = 'Sun activated!';
+      document.getElementById('status-text').textContent = 'Heart activated!';
       setTimeout(() => {
         btn.classList.remove('clicked');
-        document.getElementById('status-text').textContent = 'Sun';
+        document.getElementById('status-text').textContent = 'Heart';
       }, 600);
     });
 
