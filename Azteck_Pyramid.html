@@ -3,7 +3,7 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aztec Sun Symbol</title>
+  <title>Aztec Pyramid Symbol</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="/_sdk/element_sdk.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&amp;display=swap" rel="stylesheet">
@@ -84,27 +84,14 @@
       transform: scale(1.1);
     }
   </style>
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body>
-  <main id="app-container" style="background: transparent; width: fit-content; height: fit-content; padding: 10px;"><button id="sun-btn" class="aztec-btn rounded-lg flex items-center justify-center border-2 mb-2" title="Sun" style="background: linear-gradient(145deg, #8b4513, #5d2e0a); border-color: #cd7f32; color: #d4af37;">
-    <svg viewbox="0 0 100 100" class="symbol-svg" style="width: 160px; height: 160px;"><circle cx="50" cy="50" r="20" fill="currentColor" /> <g stroke="currentColor" stroke-width="4" fill="none">
-      <line x1="50" y1="50" x2="50" y2="15" stroke-linecap="round" />
-      <line x1="50" y1="50" x2="74.75" y2="24.75" stroke-linecap="round" />
-      <line x1="50" y1="50" x2="85" y2="50" stroke-linecap="round" />
-      <line x1="50" y1="50" x2="74.75" y2="75.25" stroke-linecap="round" />
-      <line x1="50" y1="50" x2="50" y2="85" stroke-linecap="round" />
-      <line x1="50" y1="50" x2="25.25" y2="75.25" stroke-linecap="round" />
-      <line x1="50" y1="50" x2="15" y2="50" stroke-linecap="round" />
-      <line x1="50" y1="50" x2="25.25" y2="24.75" stroke-linecap="round" />
-     </g>
+  <main id="app-container" style="background: transparent; width: fit-content; height: fit-content; padding: 10px;"><button id="pyramid-btn" class="aztec-btn rounded-lg flex items-center justify-center border-2 mb-2" title="Pyramid" style="background: linear-gradient(145deg, #8b4513, #5d2e0a); border-color: #cd7f32; color: #d4af37;">
+    <svg viewbox="0 0 100 100" class="symbol-svg" style="width: 160px; height: 160px;"><path d="M50 15 L85 85 L15 85 Z" fill="currentColor" /> <line x1="50" y1="15" x2="50" y2="85" stroke="#1a0f0a" stroke-width="2" /> <line x1="25" y1="60" x2="75" y2="60" stroke="#1a0f0a" stroke-width="2" /> <line x1="32" y1="45" x2="68" y2="45" stroke="#1a0f0a" stroke-width="2" />
     </svg></button>
-   <p id="status-text" class="text-lg text-center" style="color: #d4af37; font-family: 'Cinzel', serif;">Sun</p>
+   <p id="status-text" class="text-lg text-center" style="color: #d4af37; font-family: 'Cinzel', serif;">Pyramid</p>
   </main>
   <script>
     const defaultConfig = {
-      symbol_name: "Sun",
+      symbol_name: "Pyramid",
       button_color: "#8b4513",
       symbol_color: "#d4af37",
       accent_color: "#cd7f32",
@@ -113,7 +100,7 @@
     };
 
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const frequency = 523; // C5 note for Sun
+    const frequency = 1175; // D6 note for Pyramid
     
     function playClickSound() {
       const oscillator = audioContext.createOscillator();
@@ -132,14 +119,14 @@
       oscillator.stop(audioContext.currentTime + 0.3);
     }
     
-    const btn = document.getElementById('sun-btn');
+    const btn = document.getElementById('pyramid-btn');
     btn.addEventListener('click', () => {
       playClickSound();
       btn.classList.add('clicked');
-      document.getElementById('status-text').textContent = 'Sun activated!';
+      document.getElementById('status-text').textContent = 'Pyramid activated!';
       setTimeout(() => {
         btn.classList.remove('clicked');
-        document.getElementById('status-text').textContent = 'Sun';
+        document.getElementById('status-text').textContent = 'Pyramid';
       }, 600);
     });
 
